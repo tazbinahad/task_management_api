@@ -1,0 +1,13 @@
+{
+  "name": "task_management_api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tazbin Ahad <tazbinahad20@gmail.com>",
+  "license": "UNLICENSED",
+  "description": ""
+}
