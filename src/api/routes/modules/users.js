@@ -5,13 +5,13 @@
  * Date: 11/15/2020
  */
 
-const { getAllUsers } = require("../../controllers/userController");
-
 // Require dependencies
+const { getAllUsers, createUser } = require("../../controllers/userController");
 
 // Module scaffolding
 const usersRoute = {
   getAllUsers: getAllUsers,
+  createUser: createUser,
 };
 
 // Export module

@@ -57,18 +57,18 @@ api.handler = (req, res) => {
     res.end(payloadString);
   });
 
-  const decoder = new StringDecoder("utf-8");
-  let realData = "";
-  req.on("data", (buffer) => {
-    realData += decoder.write(buffer);
-  });
+  // const decoder = new StringDecoder("utf-8");
+  // let realData = "";
+  // req.on("data", (buffer) => {
+  //   realData += decoder.write(buffer);
+  // });
 
-  req.on("end", () => {
-    realData += decoder.end();
-    console.log(realData, 'Real Data');
-    // response handle
-    res.end("Hello world");
-  });
+  // req.on("end", () => {
+  //   realData += decoder.end();
+  //   console.log(realData, 'Real Data');
+  //   // response handle
+  //   res.end("Hello world");
+  // });
 };
 
 // export module
