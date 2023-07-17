@@ -8,8 +8,9 @@
 // Require Dependencies
 const url = require("url");
 const routes = require("./routes");
+const { StringDecoder } = require("string_decoder");
 
-// api object - module scaffolding
+// api object - Module scaffolding
 const api = {};
 
 // Api handler
@@ -54,6 +55,19 @@ api.handler = (req, res) => {
     // return the final response
     res.writeHead(statusCode);
     res.end(payloadString);
+  });
+
+  const decoder = new StringDecoder("utf-8");
+  let realData = "";
+  req.on("data", (buffer) => {
+    realData += decoder.write(buffer);
+  });
+
+  req.on("end", () => {
+    realData += decoder.end();
+    console.log(realData, 'Real Data');
+    // response handle
+    res.end("Hello world");
   });
 };
 
