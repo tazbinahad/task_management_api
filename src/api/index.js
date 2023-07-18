@@ -9,6 +9,7 @@
 const url = require("url");
 const routes = require("./routes");
 const { StringDecoder } = require("string_decoder");
+const { parseJSON } = require("../utils/utilityFunctions");
 
 // api object - Module scaffolding
 const api = {};
@@ -45,30 +46,30 @@ api.handler = (req, res) => {
   // Choose the route handler
   const chosenRoute = routes(basePath, apiPath);
 
-  // Call the route handler
-  chosenRoute(requestProperties, (statusCode, payload) => {
-    statusCode = typeof statusCode === "number" ? statusCode : 500;
-    payload = typeof payload === "object" ? payload : {};
-
-    const payloadString = JSON.stringify(payload);
-
-    // return the final response
-    res.writeHead(statusCode);
-    res.end(payloadString);
+  // Get the payload if any
+  let realData = "";
+  const decoder = new StringDecoder("utf-8");
+  req.on("data", (buffer) => {
+    realData += decoder.write(buffer);
   });
 
-  // const decoder = new StringDecoder("utf-8");
-  // let realData = "";
-  // req.on("data", (buffer) => {
-  //   realData += decoder.write(buffer);
-  // });
+  req.on("end", () => {
+    realData += decoder.end();
+    requestProperties.body = parseJSON(realData);
 
-  // req.on("end", () => {
-  //   realData += decoder.end();
-  //   console.log(realData, 'Real Data');
-  //   // response handle
-  //   res.end("Hello world");
-  // });
+    // Call the route handler
+    chosenRoute(requestProperties, (statusCode, payload) => {
+      statusCode = typeof statusCode === "number" ? statusCode : 500;
+      payload = typeof payload === "object" ? payload : {};
+
+      const payloadString = JSON.stringify(payload);
+
+      // return the final response
+      res.setHeader("Content-Type", "application/json");
+      res.writeHead(statusCode);
+      res.end(payloadString);
+    });
+  });
 };
 
 // export module

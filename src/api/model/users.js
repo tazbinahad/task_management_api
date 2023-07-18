@@ -7,6 +7,7 @@
 // Require dependencies
 const sql = require("mssql");
 const { dbConfig } = require("../../config");
+const { validateEmail } = require("../../utils/utilityFunctions");
 
 // Module scaffolding
 
@@ -30,7 +31,26 @@ class User {
       const pool = await sql.connect(dbConfig);
       const request = pool.request();
 
-      const query = `INSERT INTO task.users (name, username, password, email, created_by, created_at, role_id) 
+      // validate email
+      const isValidEmail = validateEmail(user.email);
+      if (!isValidEmail) {
+        throw new Error("Invalid email address");
+      }
+
+      // Check if username or email already exists
+      const checkQuery = `SELECT COUNT(*) AS count FROM task.users WHERE username = @username OR email = @email`;
+      request.input("username", sql.VarChar, user.username);
+      request.input("email", sql.VarChar, user.email);
+
+      const checkResult = await request.query(checkQuery);
+      const duplicateCount = checkResult.recordset[0].count;
+
+      if (duplicateCount > 0) {
+        throw new Error("Username or email already exists");
+      }
+
+      // Insert user
+      const insertQuery = `INSERT INTO task.users (name, username, password, email, created_by, created_at, role_id) 
       VALUES (@name, @username, @password, @email, @created_by, @created_at, @role_id)`;
 
       request.input("name", sql.VarChar, user.name);
@@ -41,7 +61,7 @@ class User {
       request.input("created_at", sql.DateTime, user.created_at);
       request.input("role_id", sql.Int, user.role_id);
 
-      const result = await request.query(query);
+      const result = await request.query(insertQuery);
       return result.recordset;
     } catch (error) {
       throw new Error(`Error creating user: ${error.message}`);

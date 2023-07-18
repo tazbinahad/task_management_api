@@ -15,13 +15,21 @@ const userController = {};
 // Get all users
 userController.getAllUsers = async (requestProperties, callback) => {
   try {
-    // Fetch all users from the User model
-    const users = await User.getUserList();
-    callback(200, {
-      success: true,
-      message: "Successfully retrieved users",
-      data: users,
-    });
+    const method = requestProperties.method;
+    if (method === "get") {
+      // Fetch all users from the User model
+      const users = await User.getUserList();
+      callback(200, {
+        success: true,
+        message: "Successfully retrieved users",
+        data: users,
+      });
+    } else {
+      callback(405, {
+        success: false,
+        message: "Invalid method. Expected GET.",
+      });
+    }
   } catch (error) {
     callback(500, {
       success: false,
@@ -30,10 +38,12 @@ userController.getAllUsers = async (requestProperties, callback) => {
     });
   }
 };
+
+
 // Create user
 userController.createUser = async (requestProperties, callback) => {
   try {
-    const method = requestProperties.method.toLowerCase();
+    const method = requestProperties.method;
     if (method === "post") {
       // Create user from the UserCreate model
       const user = await User.createUser(requestProperties.body);
