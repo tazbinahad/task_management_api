@@ -7,8 +7,11 @@
 // Require Dependencies
 require("dotenv").config();
 const http = require("http");
-const { port } = require("./src/config");
 const { handler } = require("./src/api");
+
+
+// Port
+const port = process.env.PORT || 3000;
 
 // App object - module scaffolding
 const app = {};
