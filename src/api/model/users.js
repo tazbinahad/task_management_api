@@ -4,6 +4,7 @@
  * Author: Tazbin Ahad
  * Date: 11/15/2020
  */
+
 // Require dependencies
 const sql = require("mssql");
 const { dbConfig } = require("../../config");

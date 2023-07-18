@@ -1,6 +1,6 @@
 /*
  * Title: Task Management Application
- * Description: A RESTFul API to manage tasks
+ * Description: A Restfull API to manage tasks
  * Author: Tazbin Ahad
  * Date: 15.07.2023
  */

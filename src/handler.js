@@ -1,9 +1,8 @@
 /*
- * Title: Handle Request Response
- * Description: Handle Resquest and response
- * Author: Sumit Saha ( Learn with Sumit )
- * Date: 11/15/2020
- *
+ * Title: Task Management Application
+ * Description: A Restfull API to manage tasks
+ * Author: Tazbin Ahad
+ * Date: 15.07.2023
  */
 
 // dependencies
