@@ -1,8 +1,9 @@
+require("dotenv").config();
 const config = {
-  user: "tazbinahad",
-  password: "1234",
-  server: "TAZBIN", // This could be an IP address or a domain name
-  database: "task_management",
+  user: process.env.user,
+  password: process.env.password,
+  server: process.env.server, // This could be an IP address or a domain name
+  database: process.env.database,
   options: {
     encrypt: false, // Use SSL encryption
   },

@@ -14,6 +14,9 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mssql": "^10.0.0"
+    "mssql": "^10.0.0",
+    "swagger-autogen": "^2.23.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }

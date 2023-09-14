@@ -1,0 +1,14 @@
+{
+  "host": "localhost:7000",
+  "basePath": "/",
+  "swaggerOptions": {
+    "docExpansion": "list",
+    "operations-tag": true,
+    "tags": [
+      {
+        "name": "users",
+        "description": "Operations related to users"
+      }
+    ]
+  }
+}
