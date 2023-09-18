@@ -1,48 +1,152 @@
 {
   "swagger": "2.0",
-  "info": {
-    "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
-  },
-  "host": "localhost:7000",
   "basePath": "/",
-  "schemes": [
-    "http"
+  "info": {
+    "title": "User API",
+    "description": "API for managing users",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations related to users"
+    }
   ],
   "paths": {
     "/users/getUsers": {
       "get": {
-        "description": "",
+        "summary": "Get a list of all users",
+        "tags": ["User"],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
     },
     "/users/createUser": {
       "post": {
-        "description": "",
+        "summary": "Create a new user",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createUser"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "User created successfully",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
     }
   },
-  "swaggerOptions": {
-    "docExpansion": "list",
-    "operations-tag": true,
-    "tags": [
-      {
-        "name": "users",
-        "description": "Operations related to users"
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "gender_id": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
       }
-    ]
+    },
+    "createUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "gender_id": {
+          "type": "integer"
+        }
+      }
+    }
   }
 }

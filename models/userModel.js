@@ -12,8 +12,24 @@ async function getAllUsers() {
   }
 }
 
-function createUser(user) {
-  // Implement logic to create a new user in the database
+async function createUserModel(user) {
+  try {
+    const pool = await sql.connect(config);
+    await pool
+      .request()
+      .input("username", sql.NVarChar(50), user.username)
+      .input("password", sql.NVarChar(50), user.password)
+      .input("firstName", sql.NVarChar(50), user.firstName)
+      .input("lastName", sql.NVarChar(50), user.lastName)
+      .input("email", sql.NVarChar(100), user.email)
+      .input("phoneNumber", sql.NVarChar(20), user.phoneNumber)
+      .input("genderId", sql.Int, user.genderId)
+      .execute("InsertUser");
+
+    await sql.close();
+  } catch (error) {
+    throw error;
+  }
 }
 
-module.exports = { getAllUsers, createUser };
+module.exports = { getAllUsers, createUserModel };
